@@ -7,22 +7,22 @@ nav{
   box-shadow: 0 4px 20px;
 
   ul { 
-    width: 100%;
+    width: 98%;
     height: 100%;
     list-style: none;
-    display: inline-block;
+    display: block;
 
     li {
       display: inline-block;
       line-height: 50px;
       text-align: right;
       float: right;
-      padding: 0 15px;
+      padding: 0 5px;
 
       a {
         color: black;
       }
-      
+
       &:first-child {
         font-size: 20px;
         float: left;
@@ -58,6 +58,28 @@ nav{
   margin: 0 0 0 15px;
   border-radius: 8px;
   box-shadow: 0 4px 20px;
+
+}
+
+.vct-devise{
+  width: 1000px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 30px 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px;
+  text-align: left;
+
+  h2{
+    text-align: center;
+  }
+}
+
+#error_explanation{
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px 10px;
+  border-radius: 8px;
 
 }
 

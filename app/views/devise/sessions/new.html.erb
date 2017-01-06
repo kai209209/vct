@@ -1,0 +1,36 @@
+<div class="vct-devise">
+  <h2>登录</h2>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">名称</label>
+      <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">邮箱</label>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">密码</label>
+      <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+    </div>
+
+    <% if devise_mapping.rememberable? -%>
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :remember_me %>记住我？
+        </label>        
+      </div>
+    <% end -%>
+
+
+    <%= f.submit "登录", class: "btn btn-default" %>
+  <% end %>
+  <hr>
+
+  <%= render "devise/shared/links" %>
+
+</div>

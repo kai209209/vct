@@ -1,0 +1,34 @@
+<div class="vct-devise">
+  <h2>注册</h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {role: 'form'}) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">名称</label>
+      <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">邮箱</label>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">密码</label>
+      <% if @minimum_password_length %>
+      <em>(最短<%= @minimum_password_length %>个字符)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "off",  class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">重复密码</label>
+      <%= f.password_field :password_confirmation, autocomplete: "off",  class: "form-control" %>
+    </div>
+
+    <%= f.submit "注册", class: "btn btn-default" %>
+  <% end %>
+  <hr>
+  <%= render "devise/shared/links" %>
+</div>
