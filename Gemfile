@@ -1,10 +1,9 @@
-source 'https://rubygems.org'
+source 'https://gems.ruby-china.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
 
 gem 'rails', '~> 5.0.1'
 gem 'sqlite3'
@@ -22,6 +21,19 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'devise'
+gem 'bootstrap-sass'
+
+#vue js
+gem 'vuejs-rails'
+gem 'sprockets-vue'
+gem 'momentjs-rails'
+
+#avatar
+gem 'letter_avatar'
+gem 'chinese_pinyin'
+
 
 group :development, :test do
   gem 'byebug', platform: :mri
