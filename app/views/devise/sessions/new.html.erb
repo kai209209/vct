@@ -4,11 +4,6 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
 
     <div class="form-group">
-      <label for="exampleInputEmail1">名称</label>
-      <%= f.text_field :name, autofocus: true, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
       <label for="exampleInputEmail1">邮箱</label>
       <%= f.email_field :email, class: "form-control" %>
     </div>
