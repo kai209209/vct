@@ -1,10 +1,11 @@
 
 <script lang="coffee">
   vm = {
-    data: ->
-      user: ''
+
     props: ['currentUser']
 
+    created: ->
+      this.$store.commit('setCurrentUser', this.currentUser)
   }
 </script>
 
@@ -19,6 +20,7 @@
     <ul class="vct-nav">
       <template v-if="currentUser">
         <li><a href="#">{{currentUser.name}}</a></li>
+        <li><a href="/vct/chat">聊天</a></li>
         <li><a href="/users/sign_out" data-method="delete">退出</a></li>
       </template>
       <template v-else>
