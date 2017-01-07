@@ -6,31 +6,42 @@ nav{
   border-radius: 0 0 8px 8px;
   box-shadow: 0 4px 20px;
 
-  ul { 
-    width: 98%;
+  ul.vct-nav {
     height: 100%;
+    margin: 0 10px 0 0;
     list-style: none;
-    display: block;
+    display: inline-block;
+    float: right;
 
     li {
       display: inline-block;
       line-height: 50px;
       text-align: right;
-      float: right;
-      padding: 0 5px;
+      padding: 0 2px;
 
       a {
         color: black;
       }
+    }    
+  }
 
-      &:first-child {
-        font-size: 20px;
-        float: left;
-        a:hover{
+  ul.vct-brand {
+    list-style: none;
+    height: 100%;
+    display: inline-block;
+    float: left;
+
+    li {
+      display: inline-block;
+      line-height: 50px;
+      font-size: 25px;
+      a {
+        color: black;
+        &:hover{
           text-decoration:none;
         }
       }
-    }    
+    }
   }
 }
 
