@@ -42,8 +42,8 @@
 <template>
   <div class="vct-profile">
     <div v-if="profile">
-      <div class="profile"><a class="info-sel" href="#" @click.prevent="showInfo">个人信息</a></div>
-      <div class="profile"><a class="search-sel" href="#" @click.prevent="showSearchFriend">查找好友</a></div>
+      <div class="profile"><a class="info-sel" href="#" @click.prevent="showInfo"><span>个人信息</span></a></div>
+      <div class="profile"><a class="search-sel" href="#" @click.prevent="showSearchFriend"><span>查找好友</span></a></div>
     </div>
     <div v-else-if="info">
       <user-info></user-info>
@@ -62,7 +62,7 @@
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 20px;
-    padding: 50px 100px;
+    padding: 60px 120px;
 
     .profile {
       display: inline-block;
@@ -96,6 +96,20 @@
 
         &.search-sel {
           background-image: url(/assets/search-profile.jpg);
+        }
+
+        span{
+          display: block;
+          width: 100%;
+          height: 100%;
+          border-radius: 300px;
+          background: rgba(255,255,255,0);
+          transition: all .5s ease;
+
+          &:hover{
+            background: rgba(255,255,255,0.5);
+          }
+
         }
 
         &:hover{
