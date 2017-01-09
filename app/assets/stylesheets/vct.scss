@@ -60,4 +60,19 @@
     padding: 150px 300px 0 300px;
 }
 
+.user-operate {
+  text-align: left;
+  width: 100%;
+  height: 400px;
+  padding: 30px 10px;
+  position: relative;
 
+  .return-pro {
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: -40px;
+
+  }
+
+}

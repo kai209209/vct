@@ -1,10 +1,11 @@
 //= require components/profile/user-info
 //= require components/profile/user-search
 
+
 <script lang="coffee">
   vm = {
     data: ->
-      state: 'profile'
+      state: 'info'
 
     computed:
       profile: ->
@@ -29,28 +30,27 @@
 
     props: ['currentUser']
 
-    created: ->
-      this.$store.commit('setCurrentUser', this.currentUser)
-
     components:
-      userInfo: VCompents['components/user-info']
-      userSearch: VCompents['components/user-search']
+      userInfo: VCompents['components/profile/user-info']
+      userSearch: VCompents['components/profile/user-search']
   }
 </script>
 
 
 <template>
   <div class="vct-profile">
-    <div v-if="profile">
-      <div class="profile"><a class="info-sel" href="#" @click.prevent="showInfo"><span>个人信息</span></a></div>
-      <div class="profile"><a class="search-sel" href="#" @click.prevent="showSearchFriend"><span>查找好友</span></a></div>
-    </div>
-    <div v-else-if="info">
-      <user-info></user-info>
-    </div>
-    <div v-else-if="searchFriend">
-      <user-search></user-search>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="profile" key='profile'>
+        <div class="profile"><a class="info-sel" href="#" @click.prevent="showInfo"><span>个人信息</span></a></div>
+        <div class="profile"><a class="search-sel" href="#" @click.prevent="showSearchFriend"><span>查找好友</span></a></div>
+      </div>
+      <div v-else-if="info" key='info'>
+        <user-info @returnProfile="returnProfile"></user-info>
+      </div>
+      <div v-else-if="searchFriend" key='searchFriend'>
+        <user-search @returnProfile="returnProfile"></user-search>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -62,7 +62,7 @@
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 20px;
-    padding: 60px 120px;
+    padding: 50px 50px;
 
     .profile {
       display: inline-block;
@@ -120,5 +120,12 @@
     }
   }
 
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
 
 </style>
