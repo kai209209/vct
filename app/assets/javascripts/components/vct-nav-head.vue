@@ -5,6 +5,11 @@
 
     created: ->
       this.$store.commit('setCurrentUser', this.currentUser)
+
+    computed:
+      storedCurrentUser: ->
+        this.$store.state.currentUser
+
   }
 </script>
 
@@ -17,8 +22,8 @@
       </li>
     </ul>
     <ul class="vct-nav">
-      <template v-if="currentUser">
-        <li><a href="/user">{{currentUser.name}}</a></li>
+      <template v-if="storedCurrentUser">
+        <li><a href="/user">{{storedCurrentUser.name}}</a></li>
         <li><a href="/vct/chat">聊天</a></li>
         <li><a href="/users/sign_out" data-method="delete">退出</a></li>
       </template>

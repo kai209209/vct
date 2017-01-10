@@ -5,4 +5,8 @@ window.store = new (Vuex.Store)(
   mutations:
     setCurrentUser: (state, user) ->
       state.currentUser = user
+
+    updateUserName: (state, currentUser) ->
+      state.currentUser = currentUser
+
 )

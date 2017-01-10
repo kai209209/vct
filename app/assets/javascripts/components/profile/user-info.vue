@@ -63,10 +63,9 @@
 <style lang="scss">
   .user-infos{
     display: inline-block;
-    position: absolute;
     padding: 10px;
-    top: 50px;
-    left: 20px;
+    vertical-align: top;
+    padding: 40px 0 0 0;
 
     .img-block {
       display: inline-block;
@@ -113,9 +112,6 @@
     display: inline-block;
     margin: 0 10px 0 100px;
     width: 50%;
-    position: absolute;
-    top: 10px;
-    right: 50px;
     }
 </style>
 
