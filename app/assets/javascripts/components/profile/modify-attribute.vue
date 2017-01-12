@@ -1,4 +1,3 @@
-//= require components/profile/modify-attribute
 
 <script lang="coffee">
   vm = {

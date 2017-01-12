@@ -8,5 +8,12 @@ Rails.application.routes.draw do
       post :update_name, :update_password
     end
   end
+
+  resources :applies, only: [:index, :create] do
+    collection do 
+      get :reapply
+      post :operate_apply
+    end 
+  end
   
 end
