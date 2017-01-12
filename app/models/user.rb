@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   after_create :generate_avatar
 
+  has_many :author_applies, class_name: "Apply", foreign_key: 'author_id'
+  has_many :receiver_applies, class_name: "Apply", foreign_key: 'receiver_id'
+
+
 
   private   
   def generate_avatar
