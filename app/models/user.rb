@@ -11,7 +11,10 @@ class User < ApplicationRecord
   has_many :author_applies, class_name: "Apply", foreign_key: 'author_id'
   has_many :receiver_applies, class_name: "Apply", foreign_key: 'receiver_id'
 
-
+  def self.search(params)
+    users = all
+    users
+  end
 
   private   
   def generate_avatar

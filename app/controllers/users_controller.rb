@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+
+  def search
+    @users = User.search(params)
+    render json: @users
+  end
+
   def show    
   end
 

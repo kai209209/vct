@@ -4,19 +4,16 @@
 
     data: ->
       searchUser: ''
-      # users: ''
+      users: ''
       usersState: ''
 
-    computed: 
-      users: ->
-        user = this.$store.state.currentUser
-        [user]
-        
+    computed:        
       userslist: ->
         this.users
 
       loading: ->
         this.usersState == 'loading'
+
 
 
 
@@ -26,6 +23,16 @@
 
       searchUserFromBacken: ->
         this.usersState = 'loading'
+        $this = this
+        $.ajax({
+          url: '/user/search'
+          type: 'GET'
+          success: (data)->
+            console.log data
+            $this.users = data
+            $this.usersState = ''
+          })
+        
 
     components:
       userApply: VCompents['components/user-apply']
