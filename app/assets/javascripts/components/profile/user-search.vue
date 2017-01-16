@@ -1,4 +1,4 @@
-//= require components/user-apply
+//= require components/profile/user-apply
 <script lang="coffee">
   vm = {
 
@@ -28,14 +28,13 @@
           url: '/user/search'
           type: 'GET'
           success: (data)->
-            console.log data
             $this.users = data
             $this.usersState = ''
           })
         
 
     components:
-      userApply: VCompents['components/user-apply']
+      userApply: VCompents['components/profile/user-apply']
 
 
 
