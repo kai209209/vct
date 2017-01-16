@@ -7,6 +7,17 @@
       userImage: ->
         this.user.avatar.replace('public', '')
 
+      userModal: ->
+        "#UserModalId" + this.user.id
+
+      modal: ->
+        "UserModalId" + this.user.id
+
+
+    methods:
+      selectStranger: ->
+        this.$emit('selectStranger', this.user)
+
 
   }
 </script>
@@ -19,7 +30,7 @@
       <span>{{user.name}}<em id="user-image-info">({{user.email}})</em></span>      
     </a>
     <div class="search-operate">
-      <span><button class="btn btn-xs btn-default">信息</button></span>
+      <span><button class="btn btn-xs btn-default" @click="selectStranger">信息</button></span>
       <span><button class="btn btn-xs btn-primary">申请好友</button></span>
     </div>
   </div>

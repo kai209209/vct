@@ -1,4 +1,6 @@
 //= require components/profile/user-apply
+//= require components/profile/stranger-info
+
 <script lang="coffee">
   vm = {
 
@@ -6,16 +8,14 @@
       searchUser: ''
       users: ''
       usersState: ''
+      stranger: ''
 
-    computed:        
+    computed:    
       userslist: ->
         this.users
 
       loading: ->
         this.usersState == 'loading'
-
-
-
 
     methods: 
       returnPro: ->
@@ -31,12 +31,16 @@
             $this.users = data
             $this.usersState = ''
           })
-        
 
+      selectStranger: (stranger) ->
+        this.stranger = stranger
+
+      shut: ->
+        this.stranger = ''
+        
     components:
       userApply: VCompents['components/profile/user-apply']
-
-
+      strangerInfo: VCompents['components/profile/stranger-info']
 
   }
 </script>
@@ -56,7 +60,10 @@
     <div class="show-users">
       <div v-if="userslist">
         <div class="search-list">
-          <user-apply v-for="user in users" :user="user"></user-apply>
+          <user-apply v-for="user in users" :user="user" @selectStranger='selectStranger'></user-apply>
+          <transition name="fade" mode="out-in">
+            <stranger-info :stranger="stranger" v-if="stranger" @shut='shut'></stranger-info>
+          </transition>
         </div>
       </div>
       <div v-else-if="loading">
