@@ -12,8 +12,9 @@ Rails.application.routes.draw do
 
   resources :applies, only: [:index, :create] do
     collection do 
-      get :reapply
+      get :apply
       post :operate_apply
+      patch :reapply
     end 
   end
   
