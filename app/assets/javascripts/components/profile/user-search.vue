@@ -9,6 +9,9 @@
       users: ''
       usersState: ''
       stranger: ''
+      searchAndOperate: true
+      authorApplies: []
+      receiverApplies: []
 
     computed:    
       userslist: ->
@@ -27,9 +30,15 @@
         $.ajax({
           url: '/user/search'
           type: 'GET'
+          data:
+            content: $this.searchUser
           success: (data)->
-            $this.users = data
-            $this.usersState = ''
+            console.log data
+            if data
+              $this.users = data
+              $this.usersState = ''
+            else
+              $this.usersState = false
           })
 
       selectStranger: (stranger) ->
@@ -37,7 +46,20 @@
 
       shut: ->
         this.stranger = ''
+
+      showPage: ->
+        this.searchAndOperate = !this.searchAndOperate
         
+    created: ->
+      $this = this
+      $.getJSON({
+        url: '/applies/my_applies'
+        success: (data) ->
+          $this.authorApplies = data.author_applies
+          $this.receiverApplies = data.receiver_applies
+        })
+
+
     components:
       userApply: VCompents['components/profile/user-apply']
       strangerInfo: VCompents['components/profile/stranger-info']
@@ -47,55 +69,86 @@
 
 
 <template>
-  <div class="user-operate"> 
-    <h3>搜索用户</h3>
+  <div class="user-operate">     
     <a class="return-pro btn btn-default btn-xs" href="#" @click.prevent="returnPro">返回上一层</a>
-    <hr>
-    <div class="search-panel">
-      <div class="form-group">
-        <input v-model="searchUser" class="form-control" placeholder="请输入用户名称或者邮箱">        
-      </div>      
-      <button class="btn btn-default btn-sm" @click="searchUserFromBacken">搜索</button>
-    </div>
-    <div class="show-users">
-      <div v-if="userslist">
-        <div class="search-list">
-          <user-apply v-for="user in users" :user="user" @selectStranger='selectStranger'></user-apply>
-          <transition name="fade" mode="out-in">
-            <stranger-info :stranger="stranger" v-if="stranger" @shut='shut'></stranger-info>
-          </transition>
-        </div>
+    <button class="btn btn-primary" id="showPage" @click="showPage">搜索用户/操作申请</button>
+    <div v-if="searchAndOperate">
+      <h3>搜索用户</h3>
+      <hr>
+      <div class="search-panel">
+        <div class="form-group">
+          <input v-model="searchUser" class="form-control" placeholder="请输入用户名称或者邮箱">        
+        </div>      
+        <button class="btn btn-default btn-sm" @click="searchUserFromBacken">搜索</button>
       </div>
-      <div v-else-if="loading">
-        <div class="loading-text">正在加载，请稍后！</div>
-        <div class="spinner">
-          <div class="spinner-container container1">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-            <div class="circle4"></div>
-          </div>
-          <div class="spinner-container container2">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-            <div class="circle4"></div>
-          </div>
-          <div class="spinner-container container3">
-            <div class="circle1"></div>
-            <div class="circle2"></div>
-            <div class="circle3"></div>
-            <div class="circle4"></div>
+      <div class="show-users">
+        <div v-if="userslist">
+          <div class="search-list">
+            <user-apply v-for="user in users" :user="user" @selectStranger='selectStranger'></user-apply>
+            <transition name="fade" mode="out-in">
+              <stranger-info :stranger="stranger" v-if="stranger" @shut='shut'></stranger-info>
+            </transition>
           </div>
         </div>
+        <div v-else-if="loading">
+          <div class="loading-text">正在查询，请稍后！</div>
+          <div class="spinner">
+            <div class="spinner-container container1">
+              <div class="circle1"></div>
+              <div class="circle2"></div>
+              <div class="circle3"></div>
+              <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+              <div class="circle1"></div>
+              <div class="circle2"></div>
+              <div class="circle3"></div>
+              <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+              <div class="circle1"></div>
+              <div class="circle2"></div>
+              <div class="circle3"></div>
+              <div class="circle4"></div>
+            </div>
+          </div>
+        </div>
+        <div v-else>无</div>
       </div>
-      <div v-else>无</div>
     </div>
+    <div v-else>
+      <h3>操作</h3>
+      <hr>
+      <div class="operate-applies">
+        <ul class="applies">
+          <li v-for="apply in authorApplies">
+            <div>{{apply}}</div>            
+          </li>
+        </ul>
+
+        <ul class="my-applies">
+          <li v-for="apply in receiverApplies">
+            <div>{{apply}}</div>            
+          </li>          
+        </ul> 
+      </div>
+    </div>    
   </div>
 </template>
 
 
 <style lang="scss">
+  .operate-applies{
+    margin: 10px auto;
+    border: 1px solid;
+    width: 600px;
+
+    ul{
+      list-style: none;
+
+    }
+  }
+
   .search-panel{
     display: inline-block;
     vertical-align: top;
@@ -112,9 +165,6 @@
     padding: 5px 20px;
   }
 
-  .earch-list{
-
-  }
 
   .loading-text{
     display: inline-block;

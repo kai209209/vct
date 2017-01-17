@@ -23,6 +23,12 @@ class AppliesController < ApplicationController
     render json: @apply
   end
 
+  def my_applies
+    @author_applies = current_user.author_applies
+    @receiver_applies = current_user.receiver_applies
+    render json: {author_applies: @author_applies, receiver_applies: @receiver_applies}
+  end
+
   def operate_apply
     
   end

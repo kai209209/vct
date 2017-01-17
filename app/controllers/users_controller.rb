@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def search
-    @users = User.search(params)
+    @users = User.search(params, current_user)
     render json: @users
   end
 
