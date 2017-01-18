@@ -5,7 +5,7 @@
 <script lang="coffee">
   vm = {
     data: ->
-      state: 'searchFriend'
+      state: 'profile'
 
     computed:
       profile: ->

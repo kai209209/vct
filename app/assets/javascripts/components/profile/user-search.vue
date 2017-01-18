@@ -9,7 +9,7 @@
       users: ''
       usersState: ''
       stranger: ''
-      searchAndOperate: false
+      searchAndOperate: true
       applies: []
 
     computed:    
