@@ -163,11 +163,6 @@
   .operate-applies{
     margin: 10px auto;
     width: 600px;
-
-    ul{
-      list-style: none;
-
-    }
   }
 
   .search-panel{

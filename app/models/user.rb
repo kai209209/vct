@@ -16,7 +16,7 @@ class User < ApplicationRecord
     users
   end
 
-  private   
+  private
   def generate_avatar
     string = Pinyin.t(self.name)
     avatar = LetterAvatar.generate(string, 100)
