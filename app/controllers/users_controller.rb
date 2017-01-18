@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
+  def search
+    @users = User.search(params, current_user)
+    render json: @users
+  end
+
   def show    
   end
 
@@ -14,7 +21,7 @@ class UsersController < ApplicationController
     if current_user.update_with_password(update_params)
       render json: {success: ''}, status: 200
     else
-      render json: {error: current_user.errors}, status: 422
+      render json: {errors: current_user.errors.messages}, status: 422
     end
   end
 

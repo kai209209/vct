@@ -45,7 +45,7 @@
         <div class="profile"><a class="search-sel" href="#" @click.prevent="showSearchFriend"><span>查找好友</span></a></div>
       </div>
       <div v-else-if="info" key='info'>
-        <user-info @returnProfile="returnProfile"></user-info>
+        <userInfo @returnProfile="returnProfile"></userInfo>
       </div>
       <div v-else-if="searchFriend" key='searchFriend'>
         <user-search @returnProfile="returnProfile"></user-search>
@@ -119,13 +119,5 @@
       }
     }
   }
-
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s
-}
-.fade-enter, .fade-leave-active {
-  opacity: 0
-}
 
 </style>

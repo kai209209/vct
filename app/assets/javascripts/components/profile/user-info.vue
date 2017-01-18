@@ -3,7 +3,7 @@
 <script lang="coffee">
   vm = {
     data: ->
-      theAttribute: 'name'
+      theAttribute: ''
 
     computed:
       currentUser: ->

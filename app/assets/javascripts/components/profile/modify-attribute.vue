@@ -1,4 +1,3 @@
-//= require components/profile/modify-attribute
 
 <script lang="coffee">
   vm = {
@@ -62,7 +61,9 @@
               setTimeout("javascript:location.href='/users/sign_in'", 1000); 
 
             error: (data) ->
-              $.each data.responseJSON.error, (key, value) ->
+              console.log data
+              $.each data.responseJSON.errors, (key, value) ->
+                console.log value
                 if key == 'current_password'
                   $this.currentPasswordError = value[0]
                 else if key == 'password'
