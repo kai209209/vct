@@ -26,7 +26,10 @@
         this.applyState == 'apply'
 
       applyStateReject: ->
-        this.applyState =='reject'
+        this.applyState == 'reject'
+
+      applyStatePass: ->
+        this.applyState == 'pass'
 
 
 
@@ -119,6 +122,7 @@
       <div class="operate-panel" v-else>
         <button class="btn btn-primary" @click="applyFriend" v-if="applyStateNil">申请好友</button>  
         <button class="btn btn-primary disabled" v-else-if="applyStateApply">请等待对方确认</button>
+        <button class="btn btn-primary disabled" v-else-if="applyStatePass">你们已经是好友了</button>
         <button class="btn btn-primary" @click="applyFriend" v-else-if="applyStateReject">已拒绝，可再次申请</button>
         <button class="btn btn-primary disabled" v-else>查询中，请稍等</button>
         <button class="btn btn-danger" @click="shut">关闭</button>
