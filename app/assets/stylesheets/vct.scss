@@ -1,32 +1,7 @@
-//=require components/vct-nav-head
+//= require components/vct-nav-head
 //= require components/user-profile
+//= require components/chatting-pool
 
-.vct-body{
-  width: 1140px;
-  margin: 20px auto;
-  text-align: center;
-}
-
-.vct-sidebar{
-  display:inline-block;
-  background: #ffffff;
-  width: 400px;
-  height: 800px;
-  margin: 0 15px 0 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px;
-}
-
-.vct-panel{
-  display:inline-block;
-  background: #ffffff;
-  width: 650px;
-  height: 800px;
-  margin: 0 0 0 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px;
-
-}
 
 .vct-devise{
   width: 1000px;
