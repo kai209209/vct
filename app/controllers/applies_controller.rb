@@ -24,13 +24,19 @@ class AppliesController < ApplicationController
   end
 
   def my_applies
-    @author_applies = current_user.author_applies
-    @receiver_applies = current_user.receiver_applies
-    render json: {author_applies: @author_applies, receiver_applies: @receiver_applies}
+    @applies = current_user.receiver_applies.apply_status.includes(:author)
   end
 
   def operate_apply
-    
+    @apply = current_user.receiver_applies.find(params[:apply_id])
+    if params[:operate] == "pass"
+      @apply.pass!
+    elsif params[:operate] == "reject"
+      @apply.reject!
+    end
+    # @apply.create_user_friends_relationship
+    head :no_content
+
   end
 
   private

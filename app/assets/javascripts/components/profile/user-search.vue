@@ -9,9 +9,8 @@
       users: ''
       usersState: ''
       stranger: ''
-      searchAndOperate: true
-      authorApplies: []
-      receiverApplies: []
+      searchAndOperate: false
+      applies: []
 
     computed:    
       userslist: ->
@@ -49,14 +48,29 @@
 
       showPage: ->
         this.searchAndOperate = !this.searchAndOperate
+
+
+      operateApply: (apply, operate, index) ->
+        $.ajax({
+          url: '/applies/operate_apply'
+          type: 'PATCH'
+          data:
+            apply_id: apply.id
+            operate: operate
+
+          success: ()->
+            alert('操作成功!')
+          })
+        this.applies.splice(index, 1)
+
         
     created: ->
       $this = this
       $.getJSON({
         url: '/applies/my_applies'
         success: (data) ->
-          $this.authorApplies = data.author_applies
-          $this.receiverApplies = data.receiver_applies
+          console.log data.applies
+          $this.applies = data.applies
         })
 
 
@@ -120,17 +134,25 @@
       <h3>操作</h3>
       <hr>
       <div class="operate-applies">
-        <ul class="applies">
-          <li v-for="apply in authorApplies">
-            <div>{{apply}}</div>            
-          </li>
-        </ul>
-
-        <ul class="my-applies">
-          <li v-for="apply in receiverApplies">
-            <div>{{apply}}</div>            
-          </li>          
-        </ul> 
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>信息内容</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(apply, index) in applies">
+              <td>{{apply.applicant.name}}</td>   
+              <td>{{apply.apply.detail}}</td>        
+              <td>
+                <button class="btn btn-success btn-xs" @click="operateApply(apply.apply, 'pass', index)">通过</button>
+                <button class="btn btn-danger btn-xs" @click="operateApply(apply.apply, 'reject', index)">拒绝</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>    
   </div>
@@ -140,7 +162,6 @@
 <style lang="scss">
   .operate-applies{
     margin: 10px auto;
-    border: 1px solid;
     width: 600px;
 
     ul{

@@ -13,8 +13,7 @@ Rails.application.routes.draw do
   resources :applies, only: [:index, :create] do
     collection do 
       get :apply, :my_applies
-      post :operate_apply
-      patch :reapply
+      patch :reapply, :operate_apply
     end 
   end
   
