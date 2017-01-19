@@ -2,16 +2,12 @@
 <script lang="coffee">
   vm = {
 
-    computed:
-      friends: ->
-        this.$store.state.friends
-
+    props: ['friends']
+    
     components:
       friend: VCompents['components/chatpool/friend-item']
-
   }
 </script>
-
 
 <template>
   <div class="friends-list"> 

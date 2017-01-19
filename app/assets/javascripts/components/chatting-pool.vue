@@ -5,12 +5,40 @@
 <script lang="coffee">
   vm = {
 
-    computed:
-      friends: ->
-        this.$store.state.friends
+    data: ->
+      friends: []
+      filteredFriends: []
 
+    computed:
       currentUser: ->
         this.$store.state.currentUser
+
+      caculateFriends: ->
+        if this.filteredFriends.length != 0
+          this.filteredFriends
+        else
+          this.friends
+
+
+    methods: 
+      filterFriends: (queryString) ->
+        #根据传入的数据进行查询且过滤
+        this.filteredFriends = this.friends.filter (friend) ->
+          nameState = String(friend.friend.name).toLowerCase().indexOf(queryString) > -1
+          emailState = String(friend.friend.email).toLowerCase().indexOf(queryString) > -1
+          nickNameState = String(friend.friends_relationship.nick_name).toLowerCase().indexOf(queryString) > -1
+          nameState || emailState || nickNameState
+        
+
+    created: ->
+      $this = this
+      $.getJSON({
+        url: '/friends_relationships'
+        success: (data) ->
+          #加载好友关系数据
+          $this.$store.commit('setFriends', data.friends_relationships)
+          $this.friends = data.friends_relationships
+        })
 
 
     components:
@@ -26,8 +54,9 @@
   <div >
     <div class="vct-body">
       <div class="vct-sidebar">
-        <search-friend></search-friend>
-        <friends-list></friends-list>   
+        <h5>我的好友</h5>
+        <search-friend :friends="friends" @filterFriends="filterFriends"></search-friend>
+        <friends-list :friends="caculateFriends"></friends-list>
       </div>
       <div class="vct-panel">
         <conversation-field></conversation-field>

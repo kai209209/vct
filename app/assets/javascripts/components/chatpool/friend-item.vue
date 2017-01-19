@@ -10,20 +10,27 @@
       messageCount: ->
         0
 
+      friendAvatar: ->
+        this.friend.friend.avatar.replace('public', '')
+
+      chattingFriendsPool: ->
+        this.$store.state.chattingFriendsPool
+
+
     methods: 
-      chatWithFriend: (friend) ->
-        's'
-
-      friendAvatar: (friend) ->
-        friend.avatar.replace('public', '')
-
+      chatWithFriend: ->
+        #设置当前聊天好友对象
+        this.$store.commit('setCurrentChattingFriend', this.friend)
+        unless this.friend in this.chattingFriendsPool
+          #如果当前好友对象没有在聊天池中，则将该好友加入聊天池
+          this.$store.commit('addFriendToChattingFriendsPool', this.friend)
   }
 </script>
 
 
 <template>
   <div class="friend-item"> 
-    <a href="#" @click.prevent="chatWithFriend(friend)"><img :src="friendAvatar(friend)" width="45" height="45"><div class="friend-info"><span>{{friend.name}}<em>({{friend.email}})</em></span><span>...</span></div><div class="message-count" v-if="messageReceive">{{messageCount}}</div></a>
+    <a href="#" @click.prevent="chatWithFriend"><img :src="friendAvatar" width="45" height="45"><div class="friend-info"><span>{{friend.friends_relationship.nick_name || friend.friend.name}}<em>({{friend.friend.email}})</em></span><span>...</span></div><div class="message-count" v-if="messageReceive">{{messageCount}}</div></a>
   </div>
 </template>
 
