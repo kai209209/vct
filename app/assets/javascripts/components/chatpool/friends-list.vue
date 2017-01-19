@@ -1,3 +1,4 @@
+//= require components/chatpool/friend-item
 <script lang="coffee">
   vm = {
 
@@ -5,13 +6,8 @@
       friends: ->
         this.$store.state.friends
 
-    methods: 
-      chatWithFriend: (friend) ->
-        's'
-
-      friendAvatar: (friend) ->
-        friend.avatar.replace('public', '')
-
+    components:
+      friend: VCompents['components/chatpool/friend-item']
 
   }
 </script>
@@ -20,8 +16,8 @@
 <template>
   <div class="friends-list"> 
     <ul>
-      <li class="friend-list" v-for="friend in friends">
-        <a href="#" @click.prevent="chatWithFriend(friend)"><img :src="friendAvatar(friend)" width="40" height="40">{{friend.name}}</a>
+      <li v-for="friend in friends">
+        <friend :friend="friend"></friend>
       </li>
     </ul>  
   </div>
@@ -36,21 +32,13 @@
 
     ul{
       list-style: none;
-      padding: 0 0 0 10px;
+      padding: 0 10px;
 
       li{
-        height: 40px;
-        margin: 5px 0 0 0;
-      }
-
-      a{
-        text-decoration: none;
-        display: block;
+        height: 45px;  
+        margin: 2px 0 0 0;      
       }
     }
   }
-
-
-
 
 </style>
