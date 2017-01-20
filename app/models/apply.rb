@@ -12,7 +12,7 @@ class Apply < ApplicationRecord
   def create_user_friends_relationship
     FriendsRelationship.create(user: self.author, friend: self.receiver)
     FriendsRelationship.create(user: self.receiver, friend: self.author)
-    # Conversation.create(author: self.author, receiver: self.receiver)
+    Conversation.create(author: self.author, receiver: self.receiver)
   end
 
 end
