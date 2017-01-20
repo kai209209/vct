@@ -38,24 +38,26 @@
 <style lang="scss">
   .friend-item{
     width: 100%;
-  }
 
-  a{
-    text-decoration: none;
-    display: inline-block;
-    height: 45px;
-    width: 100%;
-
-    img{
+    a{
+      text-decoration: none;
       display: inline-block;
       height: 45px;
-    }
+      width: 100%;
 
-    &:hover{
-      background: #eee;
-    }
+      img{
+        display: inline-block;
+        height: 45px;
+      }
 
+      &:hover{
+        background: #eee;
+      }
+
+    }
   }
+
+
 
   .friend-info{
     display: inline-block;
