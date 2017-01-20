@@ -19,6 +19,10 @@
         else
           this.friends
 
+      chattingFriendsPool: ->
+        # this.$store.state.chattingFriendsPool.length > 0
+        true
+
 
     methods: 
       filterFriends: (queryString) ->
@@ -59,7 +63,7 @@
         <friends-list :friends="caculateFriends"></friends-list>
       </div>
       <div class="vct-panel">
-        <conversation-field></conversation-field>
+        <conversation-field v-if="chattingFriendsPool"></conversation-field>
       </div>
     </div>
   </div>
