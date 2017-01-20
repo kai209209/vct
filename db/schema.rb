@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120070757) do
+ActiveRecord::Schema.define(version: 20170120071052) do
 
   create_table "applies", force: :cascade do |t|
     t.integer  "author_id"
