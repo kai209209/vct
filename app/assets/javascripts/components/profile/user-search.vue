@@ -32,7 +32,6 @@
           data:
             content: $this.searchUser
           success: (data)->
-            console.log data
             if data
               $this.users = data
               $this.usersState = ''
@@ -69,7 +68,6 @@
       $.getJSON({
         url: '/applies/my_applies'
         success: (data) ->
-          console.log data.applies
           $this.applies = data.applies
         })
 

@@ -14,14 +14,12 @@ window.store = new (Vuex.Store)(
 
     setCurrentChattingFriend: (state, friend) ->
       state.currentChattingFriend = friend
-      console.log state.currentChattingFriend
 
     setFriends: (state, friends) ->
       state.friends = friends      
 
     addFriendToChattingFriendsPool: (state, friend) ->
       state.chattingFriendsPool.push(friend)
-      console.log state.chattingFriendsPool
 
     removeFriendFromChattingFriendsPool: (state, friend) ->
       state.chattingFriendsPool.splice(state.chattingFriendsPool.indexOf(friend), 1)
