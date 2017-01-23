@@ -26,7 +26,7 @@
       <conversation-list></conversation-list>
     </div>
     <div class="conversations-middle">
-      <conversation-content></conversation-content>
+      <conversation-content v-if="currentChattingFriend"></conversation-content>
     </div>
     <div class="conversations-bottom">
       

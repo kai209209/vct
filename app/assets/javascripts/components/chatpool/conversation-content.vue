@@ -9,7 +9,9 @@
         this.$store.state.currentChattingFriend
 
 
-
+    watch:
+      currentChattingFriend: (val) ->
+        console.log val
 
   }
 </script>
