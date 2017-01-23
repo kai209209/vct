@@ -1,4 +1,6 @@
 //= require components/chatpool/conversation-list
+//= require components/chatpool/conversation-content
+
 
 <script lang="coffee">
   vm = {
@@ -12,6 +14,7 @@
 
   components:
     conversationList: VCompents['components/chatpool/conversation-list']
+    conversationContent: VCompents['components/chatpool/conversation-content']
 
   }
 </script>
@@ -23,7 +26,7 @@
       <conversation-list></conversation-list>
     </div>
     <div class="conversations-middle">
-      
+      <conversation-content></conversation-content>
     </div>
     <div class="conversations-bottom">
       
@@ -43,7 +46,6 @@
     width: 80%;
     height: 550px;
     margin: 10px auto;
-    border: 1px solid;
   }
   .conversations-bottom{
     width: 80%;
