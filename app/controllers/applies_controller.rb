@@ -34,7 +34,7 @@ class AppliesController < ApplicationController
     elsif params[:operate] == "reject"
       @apply.reject!
     end
-    # @apply.create_user_friends_relationship
+    @apply.create_user_friends_relationship
     head :no_content
 
   end

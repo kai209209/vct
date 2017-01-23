@@ -10,13 +10,15 @@ class User < ApplicationRecord
 
   has_many :author_applies, class_name: "Apply", foreign_key: 'author_id'
   has_many :receiver_applies, class_name: "Apply", foreign_key: 'receiver_id'
+  has_many :friends_relationships
+  has_many :friends,  through: :friends_relationships, source: :friend
 
   def self.search(params, current_user)
     users = User.where("users.name or users.email LIKE ?", "%#{params[:content]}%").where.not(id: current_user.id) if params[:content].present?
     users
   end
 
-  private   
+  private
   def generate_avatar
     string = Pinyin.t(self.name)
     avatar = LetterAvatar.generate(string, 100)

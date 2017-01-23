@@ -8,4 +8,11 @@ class Apply < ApplicationRecord
 
   scope :apply_status, -> { where(apply_status: 0) }
 
+
+  def create_user_friends_relationship    
+    conversation = Conversation.create(author: self.author, receiver: self.receiver)
+    FriendsRelationship.create(user: self.author, friend: self.receiver, conversation: conversation)
+    FriendsRelationship.create(user: self.receiver, friend: self.author, conversation: conversation)
+  end
+
 end

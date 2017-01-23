@@ -61,9 +61,7 @@
               setTimeout("javascript:location.href='/users/sign_in'", 1000); 
 
             error: (data) ->
-              console.log data
               $.each data.responseJSON.errors, (key, value) ->
-                console.log value
                 if key == 'current_password'
                   $this.currentPasswordError = value[0]
                 else if key == 'password'
