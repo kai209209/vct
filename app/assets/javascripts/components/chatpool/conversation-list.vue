@@ -39,16 +39,16 @@
 <style lang="scss">
   .conversation-list{
     width: 100%;
-    height: 20px;
+    height: 40px;
 
     ul{
       list-style: none;
       text-align: left;
       width: 100%;
-      height: 50px;
+      height: 40px;
       padding: 0;
       line-height: 20px;
-      overflow-x:scroll; 
+      overflow-y:scroll; 
 
       li{
         display: inline-block;
