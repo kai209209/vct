@@ -37,7 +37,7 @@
   .conversations-top{
     width: 90%;
     height: 30px;
-    margin: 30px auto 10px auto;
+    margin: 30px auto 20px auto;
   }
   .conversations-middle{
     width: 80%;

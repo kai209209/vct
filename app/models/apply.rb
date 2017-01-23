@@ -1,7 +1,6 @@
 class Apply < ApplicationRecord
   belongs_to :author, class_name: "User"
   belongs_to :receiver, class_name: "User"
-  belongs_to :conversation
 
   validates :author_id, :receiver_id, presence: true
 

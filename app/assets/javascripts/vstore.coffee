@@ -17,7 +17,6 @@ window.store = new (Vuex.Store)(
 
     setFriends: (state, friends) ->
       state.friends = friends
-      state.chattingFriendsPool = friends
 
 
     addFriendToChattingFriendsPool: (state, friend) ->
