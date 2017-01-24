@@ -1,5 +1,6 @@
 //= require components/chatpool/conversation-list
 //= require components/chatpool/conversation-content
+//= require components/chatpool/conversation-form
 
 
 <script lang="coffee">
@@ -15,6 +16,7 @@
   components:
     conversationList: VCompents['components/chatpool/conversation-list']
     conversationContent: VCompents['components/chatpool/conversation-content']
+    conversationForm: VCompents['components/chatpool/conversation-form']
 
   }
 </script>
@@ -23,13 +25,13 @@
 <template>
   <div> 
     <div class="conversations-top">
-      <conversation-list></conversation-list>
+      <conversation-list v-if="currentChattingFriend"></conversation-list>
     </div>
     <div class="conversations-middle">
       <conversation-content v-if="currentChattingFriend"></conversation-content>
     </div>
     <div class="conversations-bottom">
-      
+      <conversation-form v-if="currentChattingFriend"></conversation-form>      
     </div>
   </div>
 </template>
@@ -44,14 +46,13 @@
   }
   .conversations-middle{
     width: 80%;
-    height: 550px;
+    height: 500px;
     margin: 10px auto;
   }
   .conversations-bottom{
     width: 80%;
-    height: 150px;
+    height: 170px;
     margin: 10px auto;
-    border: 1px solid;
   }
 
 </style>
