@@ -23,15 +23,15 @@
 
 
 <template>
-  <div> 
+  <div v-if="currentChattingFriend"> 
     <div class="conversations-top">
-      <conversation-list v-if="currentChattingFriend"></conversation-list>
+      <conversation-list></conversation-list>
     </div>
     <div class="conversations-middle">
-      <conversation-content v-if="currentChattingFriend"></conversation-content>
+      <conversation-content></conversation-content>
     </div>
     <div class="conversations-bottom">
-      <conversation-form v-if="currentChattingFriend"></conversation-form>      
+      <conversation-form></conversation-form>      
     </div>
   </div>
 </template>
