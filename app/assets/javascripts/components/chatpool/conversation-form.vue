@@ -2,10 +2,26 @@
   vm = {
     data: ->
       message: ''
+      content: ''
+
+    computed:
+      currentChattingFriend: ->
+        this.$store.state.currentChattingFriend
 
     methods:
       sendMessage: ->
-        true
+        $this = this
+        conversation_id = $this.currentChattingFriend.conversation.id
+        $.ajax({
+          url: "/conversations/#{conversation_id}/user_messages"
+          type: 'POST'
+          data:
+            user_message:
+              content: $this.content
+              conversation_id: conversation_id
+          success: (data) ->
+
+          })
 
 
   }
@@ -15,7 +31,7 @@
 <template>
   <div id="conversation-form"> 
     <div class="form-group">
-      <textarea class="form-control" rows='5' v-model='message' >
+      <textarea class="form-control" rows='5' v-model='content' >
     </div>
     <div class="form-group">
       <button class="btn btn-default btn-sm" @click='sendMessage'>发送</button>
