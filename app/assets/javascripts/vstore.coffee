@@ -4,7 +4,6 @@ window.store = new (Vuex.Store)(
     friends: []
     currentChattingFriend: ''
     chattingFriendsPool: []
-    currentConversationMessages: []
 
   mutations:
     setCurrentUser: (state, user) ->
@@ -30,9 +29,4 @@ window.store = new (Vuex.Store)(
       else
         state.currentChattingFriend = ''
 
-    setCurrentConversationMessages: (state, messages) ->
-      state.currentConversationMessages = messages
-
-    addMessagesToCurrentConversationMessages: (state, message) ->
-      state.currentConversationMessages.push(message)
 )

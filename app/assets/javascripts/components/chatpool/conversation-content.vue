@@ -4,22 +4,28 @@
     data: ->
       messageState: false
       content: ''
+      currentConversationMessages: []
 
     computed:
       currentChattingFriend: ->
         this.$store.state.currentChattingFriend
 
-      currentConversationMessages: ->
-        this.$store.state.currentConversationMessages
+      # currentConversationMessages: ->
+      #   this.$store.state.currentConversationMessages
 
     created: ->
       $this = this
       $.getJSON({
         url: "/conversations/#{$this.currentChattingFriend.conversation.id}"
         success: (data) ->
-          $this.$store.commit('setCurrentConversationMessages', data.user_messages)
+          $this.currentConversationMessages = data.user_messages
           $this.messageState = true
+          Vue.nextTick ->
+            $this.rollthHeight(1)
         })
+
+    updated: ->
+      this.rollthHeight(1)
 
     watch:
       currentChattingFriend: (val) ->
@@ -28,8 +34,8 @@
         $.getJSON({
           url: "/conversations/#{val.conversation.id}"
           success: (data) ->
-            console.log data
-            $this.$store.commit('setCurrentConversationMessages', data.user_messages)
+            # $this.$store.commit('setCurrentConversationMessages', data.user_messages)
+            $this.currentConversationMessages = data.user_messages
             $this.messageState = true
           })
 
@@ -46,8 +52,22 @@
         value = this.content && this.content.trim()
         if !value
           return
-          
-        conversation_id = $this.currentChattingFriend.conversation.id
+
+        conversation_id = this.currentChattingFriend.conversation.id
+
+        messageProperty = {
+          message:          
+            id: 'null'
+            content: this.content
+            user_id: this.$store.state.currentUser.id
+            conversation_id: conversation_id
+          user:
+            this.$store.state.currentUser
+        }
+
+        this.currentConversationMessages.push(messageProperty)
+        messageIndex = this.currentConversationMessages.indexOf(messageProperty)
+        
         $this = this        
         $.ajax({
           url: "/conversations/#{conversation_id}/user_messages"
@@ -57,27 +77,40 @@
               content: $this.content
               conversation_id: conversation_id
           success: (data) ->
-            $this.$store.commit('addMessagesToCurrentConversationMessages', data.user_message)    
-            $this.content = ''       
-
+            $this.currentConversationMessages.splice(messageIndex, 1, data.user_message)   
           })
+        this.content = ''
+
+      rollthHeight: (st)->
+        allmessages = $('#vct-conversation')
+        allmessages.scrollTop(allmessages.prop("scrollHeight"))
+
+      sendingState: (message) ->
+        console.log
+        if message.message.id == 'null'
+          true
+        else 
+          false
 
     filters:
       formatDate: (v) ->
         moment(v).format('YYYY-MM-DD HH:mm')
+
   }
 </script>
 
 <template>
   <div id="conversation-info"> 
-    <div id="vct-conversation">    
+    <div id="vct-conversation">
       <ul v-if="messageState">
         <li v-for="messageItem in currentConversationMessages">
           <p class="time"><span>{{messageItem.message.created_at | formatDate}}</span></p>
           <div class="main" :class="userClass(messageItem)">
             <img class="avatar" width="30" height="30" :src="userAvatar(messageItem.user)"/>
             <div class="text">{{messageItem.message.content}}</div>
+            <p v-if="sendingState(messageItem)">发送中</p>
           </div>
+
         </li>
       </ul>
       <div class="spinner" v-else>
@@ -179,6 +212,13 @@
           border-right-color: #ccffff;
       }
     }
+
+    .main{
+      p {
+        font-size: 8px;
+        padding: 0 0 0 45px;
+      }
+    }
     
     .self {
       text-align: right;
@@ -195,7 +235,11 @@
               left: 100%;
               border-right-color: transparent;
               border-left-color: #b2e281;
-          }
+          }     
+      }
+
+      p {
+        padding: 0 45px 0 0;
       }
     }
   }
