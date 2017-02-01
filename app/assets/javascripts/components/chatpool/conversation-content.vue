@@ -2,27 +2,35 @@
 <script lang="coffee">
   vm = {
     data: ->
-      messageItems: []
+      messageState: false
+      content: ''
 
     computed:
       currentChattingFriend: ->
         this.$store.state.currentChattingFriend
+
+      currentConversationMessages: ->
+        this.$store.state.currentConversationMessages
 
     created: ->
       $this = this
       $.getJSON({
         url: "/conversations/#{$this.currentChattingFriend.conversation.id}"
         success: (data) ->
-          $this.messageItems = data.user_messages
+          $this.$store.commit('setCurrentConversationMessages', data.user_messages)
+          $this.messageState = true
         })
 
     watch:
       currentChattingFriend: (val) ->
+        this.messageState = false
         $this = this
         $.getJSON({
           url: "/conversations/#{val.conversation.id}"
           success: (data) ->
-            $this.messageItems = data.user_messages
+            console.log data
+            $this.$store.commit('setCurrentConversationMessages', data.user_messages)
+            $this.messageState = true
           })
 
     methods:
@@ -33,6 +41,27 @@
       userAvatar: (user) ->
         user.avatar.replace('public', '')
 
+
+      sendMessage: ->
+        value = this.content && this.content.trim()
+        if !value
+          return
+          
+        conversation_id = $this.currentChattingFriend.conversation.id
+        $this = this        
+        $.ajax({
+          url: "/conversations/#{conversation_id}/user_messages"
+          type: 'POST'
+          data:
+            user_message:
+              content: $this.content
+              conversation_id: conversation_id
+          success: (data) ->
+            $this.$store.commit('addMessagesToCurrentConversationMessages', data.user_message)    
+            $this.content = ''       
+
+          })
+
     filters:
       formatDate: (v) ->
         moment(v).format('YYYY-MM-DD HH:mm')
@@ -40,25 +69,59 @@
 </script>
 
 <template>
-  <div id="vct-conversation"> 
-    <ul>
-      <li v-for="messageItem in messageItems">
-        <p class="time"><span>{{messageItem.message.created_at | formatDate}}</span></p>
-        <div class="main" :class="userClass(messageItem)">
-          <img class="avatar" width="30" height="30" :src="userAvatar(messageItem.user)"/>
-          <div class="text">{{messageItem.message.content}}</div>
+  <div id="conversation-info"> 
+    <div id="vct-conversation">    
+      <ul v-if="messageState">
+        <li v-for="messageItem in currentConversationMessages">
+          <p class="time"><span>{{messageItem.message.created_at | formatDate}}</span></p>
+          <div class="main" :class="userClass(messageItem)">
+            <img class="avatar" width="30" height="30" :src="userAvatar(messageItem.user)"/>
+            <div class="text">{{messageItem.message.content}}</div>
+          </div>
+        </li>
+      </ul>
+      <div class="spinner" v-else>
+        <div class="spinner-container container1">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
         </div>
-      </li>
-    </ul>
+        <div class="spinner-container container2">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="content-form"> 
+      <div class="form-group">
+        <textarea class="form-control" rows='5' v-model='content' >
+      </div>
+      <div class="form-group">
+        <button class="btn btn-default btn-sm" @click='sendMessage'>发送</button>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <style lang="scss">
+  #conversation-info {
+    height: 98%;
+  }
+
   #vct-conversation{
     padding: 10px 15px;
     overflow-y: scroll;
-    height: 98%;
+    height: 500px;
     margin: 3px auto;
     border: 1px solid #dcdcdc;
     border-radius: 3px;
@@ -135,6 +198,15 @@
           }
       }
     }
+  }
+
+  #content-form{
+    width: 100%;
+    padding: 0 15px;
+    height: 150px;
+    margin: 3px auto;
+    padding: 20px 0 0 0;
+    text-align: left;
   }
 
 </style>
