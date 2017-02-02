@@ -5,24 +5,17 @@
       messageState: false
       content: ''
       currentConversationMessages: []
+      currentConversation: ''
 
     computed:
       currentChattingFriend: ->
         this.$store.state.currentChattingFriend
 
-      # currentConversationMessages: ->
-      #   this.$store.state.currentConversationMessages
+      webSocketData: ->
+        this.$store.state.webSocketData
 
-    created: ->
-      $this = this
-      $.getJSON({
-        url: "/conversations/#{$this.currentChattingFriend.conversation.id}"
-        success: (data) ->
-          $this.currentConversationMessages = data.user_messages
-          $this.messageState = true
-          Vue.nextTick ->
-            $this.rollthHeight(1)
-        })
+    mounted: ->   
+      this.loadMessages(this.currentChattingFriend)
 
     updated: ->
       this.rollthHeight(1)
@@ -30,16 +23,25 @@
     watch:
       currentChattingFriend: (val) ->
         this.messageState = false
+        this.loadMessages(val)
+
+      webSocketData: (val) ->
+        if val.operate == 'send_message' && val.conversation_id == this.currentConversation.id
+          this.currentConversationMessages.push(val.user_message)
+          
+
+    methods:
+      loadMessages: (val) ->
         $this = this
         $.getJSON({
           url: "/conversations/#{val.conversation.id}"
           success: (data) ->
-            # $this.$store.commit('setCurrentConversationMessages', data.user_messages)
             $this.currentConversationMessages = data.user_messages
+            $this.currentConversation = data.conversation
             $this.messageState = true
+            $this.rollthHeight(1)
           })
 
-    methods:
       userClass: (messageItem) ->
         if messageItem.user.id == this.$store.state.currentUser.id
           'self'
@@ -86,7 +88,6 @@
         allmessages.scrollTop(allmessages.prop("scrollHeight"))
 
       sendingState: (message) ->
-        console.log
         if message.message.id == 'null'
           true
         else 

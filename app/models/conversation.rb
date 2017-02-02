@@ -5,4 +5,9 @@ class Conversation < ApplicationRecord
   has_many :user_messages
 
   validates :author, uniqueness: { scope: :receiver }
+
+
+  def with(current_user)
+    author == current_user ? receiver : author
+  end
 end

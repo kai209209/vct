@@ -4,6 +4,7 @@ window.store = new (Vuex.Store)(
     friends: []
     currentChattingFriend: ''
     chattingFriendsPool: []
+    webSocketData: ''
 
   mutations:
     setCurrentUser: (state, user) ->
@@ -28,5 +29,9 @@ window.store = new (Vuex.Store)(
         state.currentChattingFriend = state.chattingFriendsPool[0]
       else
         state.currentChattingFriend = ''
+
+    setWebSocketData: (state, data) ->
+      state.webSocketData = data
+
 
 )

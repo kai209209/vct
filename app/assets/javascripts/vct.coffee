@@ -7,8 +7,14 @@ $ ->
     el: '#vct-el'
     store,
 
+    methods: 
+      setVueData: (data) ->
+        this.$store.commit('setWebSocketData', data)
+
     components:
       vctNav: VCompents['components/vct-nav-head']
       userProfile: VCompents['components/user-profile']
       chattingPool: VCompents['components/chatting-pool']
     })
+
+  chat = new UserChat(app)
