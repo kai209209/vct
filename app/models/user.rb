@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
 
   def self.search(params, current_user)
-    users = User.where("users.name or users.email LIKE ?", "%#{params[:content]}%").where.not(id: current_user.id) if params[:content].present?
+    users = User.where("users.name LIKE ? OR users.email LIKE ?", "%#{params[:content]}%", "%#{params[:content]}%").where.not(id: current_user.id) if params[:content].present?
     users
   end
 
