@@ -14,9 +14,11 @@
           'active'
 
       selectCurrentChattingFriend: (friend) ->
+        #选择聊天的对象
         this.$store.commit('setCurrentChattingFriend', friend)
 
       removeFriendFromChattingFriendsPool: (friend) ->
+        #关闭聊天对象
         this.$store.commit('removeFriendFromChattingFriendsPool', friend)
 
 
@@ -31,7 +33,6 @@
         <span><a href="#" @click.prevent="selectCurrentChattingFriend(friend)">{{friend.friends_relationship.nick_name || friend.friend.name}}</a></span><span><a href="#" @click.prevent="removeFriendFromChattingFriendsPool(friend)">x</a></span>
       </li>
     </ul>
-
   </div>
 </template>
 

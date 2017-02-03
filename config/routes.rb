@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'friends_relationships/index'
 
   root "static#index"
   devise_for :users, :controllers => {registrations: 'registrations/registrations'}
@@ -13,6 +12,10 @@ Rails.application.routes.draw do
   end
 
   resources :friends_relationships, only: [:index]
+  resources :conversations, only: :show do
+    resources :user_messages, only: :create
+  end
+
 
   resources :applies, only: [:index, :create] do
     collection do 
