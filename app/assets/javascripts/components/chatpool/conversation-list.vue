@@ -109,7 +109,7 @@
       }     
 
       .active{
-        background-color: #cc9999;
+        background-color: #e0f0e9; 
       }
     }
   }
